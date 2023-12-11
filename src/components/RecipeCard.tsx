@@ -7,7 +7,7 @@ const { Meta } = Card;
 const Recipe: React.FC<any> = ({ recipe }) => {
   return (
     <Card
-      style={{ width: 500, margin: "2rem auto" }}
+      style={{ width: 300, margin: "2rem auto" }}
       cover={<img alt="example" src={recipe.strMealThumb} />}
       actions={[]}
     >

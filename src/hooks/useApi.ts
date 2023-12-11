@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-const useApi = (method: any, args: any) => {
+const useApi = (method: any, args?: any) => {
   const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -11,15 +11,14 @@ const useApi = (method: any, args: any) => {
         setIsLoading(true);
         const { data } = await method(args);
         setData(data);
+        setIsLoading(false);
       };
 
       callMethod();
     } catch (e: any) {
       setError(e.message || "Something went wrong");
-    } finally {
-      setIsLoading(false);
     }
-  }, []);
+  }, [method]);
 
   return { data, isLoading, error };
 };
