@@ -1,7 +1,10 @@
 import { Row, Col, Typography, Button, Flex } from "antd";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { FiHeart, FiStar } from "react-icons/fi";
 // images
 import heroSectionImage from "../../../assets/hero-section.gif";
+import AvatarWithText from "../../common/AvatarWithText";
+
 const HeroSection = () => {
   return (
     <Row
@@ -12,9 +15,9 @@ const HeroSection = () => {
         padding: "4rem",
       }}
     >
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} className="flex">
+      <Col xs={24} sm={24} md={12} lg={12} xl={12} className="flex-col">
         <div>
-          <Typography.Title level={1}>
+          <Typography.Title level={2} style={{ fontSize: "3.5rem" }}>
             <span style={{ color: "var(--primary)" }}>Cooking</span> with Fun
             Made Easy and Accessible
           </Typography.Title>
@@ -33,6 +36,21 @@ const HeroSection = () => {
             Random
           </Button>
           <Button type="text">{"Learn More >"}</Button>
+        </Flex>
+        <Flex gap={"2rem"}>
+          <AvatarWithText
+            avatarIcon={<FiHeart style={{ color: "var(--orange)" }} />}
+            backgroundColor={"var(--light-orange)"}
+            avatarSize={60}
+            text="Inspired by hundereds of delicious recipes"
+            flex={1}
+          />
+          <AvatarWithText
+            avatarIcon={<FiStar style={{ color: "var(--green)" }} />}
+            backgroundColor={"var(--light-green)"}
+            avatarSize={60}
+            text="Inspired by hundereds of delicious recipes"
+          />
         </Flex>
       </Col>
 

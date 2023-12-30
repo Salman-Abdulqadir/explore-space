@@ -7,7 +7,7 @@ import {
   GiPerspectiveDiceSixFacesRandom,
 } from "react-icons/gi";
 import type { MenuProps } from "antd";
-import { Menu, Button, Flex, Typography, Avatar } from "antd";
+import { Menu, Button, Flex, Typography, Avatar, Drawer } from "antd";
 
 const exploreSubMenuConfig: MenuProps["items"] = [
   {
@@ -61,28 +61,55 @@ const navConfig: MenuProps["items"] = [
 
 const NavBar: React.FC = () => {
   const [current, setCurrent] = useState("home");
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
   };
 
+  const showDrawer = () => {
+    setDrawerVisible(true);
+  };
+
+  const onClose = () => {
+    setDrawerVisible(false);
+  };
   return (
-    <Flex justify="space-between" align="center" wrap="wrap">
-      <Flex align="center" gap={"1rem"}>
-        <Avatar
-          icon={<GiForkKnifeSpoon style={{ color: "var(--black)" }} />}
-          size={50}
-          style={{ background: "var(--primary)" }}
-        />
-        <Typography.Title level={2}>Food</Typography.Title>
+    <>
+      <Flex justify="space-between" align="center" wrap="wrap">
+        <Flex align="center" gap="1rem">
+          <Avatar
+            icon={<GiForkKnifeSpoon style={{ color: "var(--black)" }} />}
+            size={50}
+            style={{ background: "var(--primary)" }}
+          />
+          <Typography.Title level={2}>Food</Typography.Title>
+        </Flex>
+        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal">
+          {navConfig.map((item: any) => (
+            <Menu.Item key={item.key}>{item.label}</Menu.Item>
+          ))}
+        </Menu>
       </Flex>
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={navConfig}
-      />
-    </Flex>
+      <Drawer
+        title="Menu"
+        placement="right"
+        closable={true}
+        onClose={onClose}
+        visible={drawerVisible}
+      >
+        <Menu onClick={onClick} selectedKeys={[current]} mode="vertical">
+          {navConfig.map((item: any) => (
+            <Menu.Item key={item.key}>{item.label}</Menu.Item>
+          ))}
+        </Menu>
+      </Drawer>
+
+      {/* Button to trigger Drawer on smaller screens */}
+      <Button type="primary" onClick={showDrawer} style={{ display: "none" }}>
+        Open Menu
+      </Button>
+    </>
   );
 };
 
