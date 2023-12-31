@@ -1,0 +1,32 @@
+.recommendation-section {
+  background-color: white;
+  min-height: 88vh;
+  padding: $section-padding;
+  width: 100%;
+  .recommendation-section-about {
+    text-align: center;
+    .recommendation-section-about-paragraph {
+      margin: auto;
+      width: 50%;
+    }
+  }
+  .recoomendation-section-carrousels {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: $section-padding;
+    .recoomendation-section-carrousel-1 {
+      width: 350px;
+    }
+    .recoomendation-section-carrousel-2 {
+      width: 450px;
+    }
+    .recoomendation-section-carrousel-3 {
+      width: 350px;
+    }
+    .recoomendation-section-carrousel-image {
+      border-radius: 1rem !important;
+    }
+  }
+}

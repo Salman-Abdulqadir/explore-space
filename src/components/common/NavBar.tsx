@@ -50,7 +50,7 @@ const navConfig: MenuProps["items"] = [
         type="primary"
         shape="round"
         icon={<GiPerspectiveDiceSixFacesRandom />}
-        style={{ background: "var(--primary)", color: "var(--black)" }}
+        className="green-button"
       >
         Random
       </Button>
@@ -75,9 +75,9 @@ const NavBar: React.FC = () => {
     >
       <Flex align="center" gap={"1rem"}>
         <Avatar
-          icon={<GiForkKnifeSpoon style={{ color: "var(--black)" }} />}
+          icon={<GiForkKnifeSpoon style={{ color: "black" }} />}
           size={50}
-          style={{ background: "var(--primary)" }}
+          className="primary-background"
         />
         <Typography.Title level={2}>Food</Typography.Title>
       </Flex>

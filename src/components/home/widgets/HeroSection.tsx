@@ -18,8 +18,8 @@ const HeroSection = () => {
       <Col xs={24} sm={24} md={12} lg={12} xl={12} className="flex-col">
         <div>
           <Typography.Title level={2} style={{ fontSize: "3.5rem" }}>
-            <span style={{ color: "var(--primary)" }}>Cooking</span> with Fun
-            Made Easy and Accessible
+            <span className="primary-color">Cooking</span> with Fun Made Easy
+            and Accessible
           </Typography.Title>
           <Typography.Paragraph>
             Unleash your inner chef with our curated collection of delicious and
@@ -31,7 +31,7 @@ const HeroSection = () => {
             type="primary"
             shape="round"
             icon={<GiPerspectiveDiceSixFacesRandom />}
-            style={{ background: "var(--primary)", color: "var(--black)" }}
+            className="green-button"
           >
             Random
           </Button>
@@ -39,15 +39,15 @@ const HeroSection = () => {
         </Flex>
         <Flex gap={"2rem"}>
           <AvatarWithText
-            avatarIcon={<FiHeart style={{ color: "var(--orange)" }} />}
-            backgroundColor={"var(--light-orange)"}
+            avatarIcon={<FiHeart style={{ color: "rgb(255, 145, 77)" }} />}
+            backgroundColor={"rgba(255, 145, 77, 0.2)"}
             avatarSize={60}
             text="Inspired by hundereds of delicious recipes"
             flex={1}
           />
           <AvatarWithText
-            avatarIcon={<FiStar style={{ color: "var(--green)" }} />}
-            backgroundColor={"var(--light-green)"}
+            avatarIcon={<FiStar style={{ color: "rgb(126, 217, 87)" }} />}
+            backgroundColor={"rgba(126, 217, 87, 0.2)"}
             avatarSize={60}
             text="Inspired by hundereds of delicious recipes"
           />
