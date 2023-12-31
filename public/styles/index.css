@@ -25,6 +25,9 @@ html {
   gap: 1rem;
 }
 
+.vertical-centered {
+  justify-content: center;
+}
 .nav-bar {
   position: fixed;
   top: 0;
