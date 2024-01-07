@@ -1,6 +1,7 @@
 import { Layout } from "antd";
 import React from "react";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 
 const { Header, Content } = Layout;
 const AppLayout: React.FC<any> = ({ children }) => {
@@ -17,6 +18,7 @@ const AppLayout: React.FC<any> = ({ children }) => {
         <NavBar />
       </Header>
       <Content>{children}</Content>
+      <Footer />
     </Layout>
   );
 };

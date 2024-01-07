@@ -1,26 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const useApi = (method: any, args?: any) => {
-  const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [result, setResult] = useState({
+    data: {},
+    isLoading: true,
+    isError: false,
+  });
 
-  useEffect(() => {
+  const callMethod = useCallback(async () => {
     try {
-      const callMethod = async () => {
-        setIsLoading(true);
-        const { data } = await method(args);
-        setData(data);
-        setIsLoading(false);
-      };
-
-      callMethod();
-    } catch (e: any) {
-      setError(e.message || "Something went wrong");
+      setResult((_result) => ({ ..._result, isLoading: true }));
+      const results = await method(args);
+      setResult((_result) => ({ ..._result, data: results }));
+    } catch (e) {
+      setResult((_result) => ({ ..._result, isError: true }));
+    } finally {
+      setResult((_result) => ({ ..._result, isLoading: false }));
     }
-  }, [method]);
+  }, [method, args]);
 
-  return { data, isLoading, error };
+  // useEffect(() => {
+  //   console.log("getting called fam");
+  //   callMethod();
+  // }, [callMethod]);
+
+  return [result as any, callMethod];
 };
 
 export default useApi;

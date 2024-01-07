@@ -1,0 +1,22 @@
+/* YourComponent.scss */
+
+.recipe-list-section {
+  height: 88vh;
+  padding: 0 $section-padding;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .recipe-list-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .recipe-list-section-header-filters {
+      display: flex;
+      gap: $section-padding;
+    }
+  }
+  .recipe-list {
+    height: 75%;
+    overflow-y: auto;
+  }
+}
