@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 const useApi = (method: any) => {
   const [result, setResult] = useState({
@@ -21,11 +21,6 @@ const useApi = (method: any) => {
     },
     [method]
   );
-
-  // useEffect(() => {
-  //   console.log("getting called fam");
-  //   callMethod();
-  // }, [callMethod]);
 
   return [result as any, callMethod];
 };

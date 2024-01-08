@@ -5,9 +5,9 @@ import {
   Skeleton,
   Pagination,
   Typography,
-  Button,
   Select,
   Input,
+  Button,
 } from "antd";
 import "./_recipe-list.scss";
 import useApi from "../../../../hooks/useApi";
@@ -17,6 +17,8 @@ import {
   formatFilterValues,
 } from "../../utils/helpers";
 import { defaultSelectValue } from "../../utils/constants";
+import { MdRemoveRedEye } from "react-icons/md";
+import RecipeDetails from "../RecipeDetails";
 
 const RecipeList: React.FC = () => {
   //api calls
@@ -40,17 +42,20 @@ const RecipeList: React.FC = () => {
     RecipeService.getListOfIngredients
   );
 
+  const [selectedRecipeDetails, getSelectedRecipeDetails] = useApi(
+    RecipeService.getRecipeById
+  );
+
   //states
   const [pageSize, setPageSize] = useState(10);
   const [recipesToDisplay, setRecipesToDisplay] = useState<any[]>([]);
   const [activeFilter, setActiveFilter] = useState("area");
-  const loading = false;
   const [formValues, setFormValues] = useState<any>({
-    areaFilter: defaultSelectValue("Area"),
+    areaFilter: { label: "American", value: "American" },
     categoryFilter: defaultSelectValue("Category"),
     ingredientFilter: defaultSelectValue("Ingredient"),
   });
-
+  const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(false);
   // refs
   const isRendered = useRef(false);
 
@@ -106,6 +111,12 @@ const RecipeList: React.FC = () => {
         : [];
   };
 
+  const isLoading = (type: string) => {
+    if (type === "area") return recipeResultsByAreas.isLoading;
+    else if (type === "category") return recipeResultsByCategories.isLoading;
+    else if (type === "ingredient") return recipeResultsByIngredients.isLoading;
+  };
+
   // useEffects
   useEffect(() => {
     if (!isRendered.current) {
@@ -118,7 +129,6 @@ const RecipeList: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("I am here");
     if (getRecipeResults(activeFilter).length)
       setRecipesToDisplay(getRecipeResults(activeFilter).slice(0, pageSize));
   }, [
@@ -128,8 +138,10 @@ const RecipeList: React.FC = () => {
   ]);
 
   useEffect(() => {
-    console.log(areaSelectValues.data);
-  }, [areaSelectValues.data]);
+    if (selectedRecipeDetails.data?.data?.meals) {
+      setIsRecipeDetailsOpen(true);
+    }
+  }, [selectedRecipeDetails.data]);
 
   return (
     <section className="recipe-list-section">
@@ -143,7 +155,6 @@ const RecipeList: React.FC = () => {
             onSearch={() => console.log("hello")}
             enterButton
           />
-          <Button onClick={() => getRecipesByAreas()}>load data</Button>
           <Select
             showSearch={true}
             disabled={areaSelectValues.isLoading}
@@ -198,25 +209,42 @@ const RecipeList: React.FC = () => {
       </div>
       <div className="recipe-list">
         <List
-          loading={recipeResultsByAreas?.isLoading}
-          itemLayout="vertical"
-          size="small"
+          loading={isLoading(activeFilter)}
+          itemLayout="horizontal"
+          size="large"
           pagination={false}
           dataSource={recipesToDisplay}
           renderItem={(item: any) => (
             <List.Item
-              key={item.id}
-              extra={
-                !loading && (
-                  <img width={250} alt="logo" src={item.strMealThumb} />
-                )
-              }
+              key={item.idMeal}
+              actions={[
+                <Button
+                  onClick={() => {
+                    getSelectedRecipeDetails(item.idMeal);
+                  }}
+                  //   loading={selectedRecipeDetails.isLoading}
+                  icon={<MdRemoveRedEye />}
+                >
+                  View
+                </Button>,
+              ]}
             >
-              <Skeleton loading={recipeResultsByAreas.isLoading} active avatar>
+              <Skeleton loading={isLoading(activeFilter)} active avatar>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.strMealThumb} />}
-                  title={<a href={item.href}>{item.strMeal}</a>}
-                  //   description={item.description}
+                  avatar={
+                    <Avatar src={item.strMealThumb} shape="square" size={100} />
+                  }
+                  title={
+                    <Typography.Link href={item.href}>
+                      {item.strMeal}
+                    </Typography.Link>
+                  }
+                  description={
+                    <Typography.Paragraph>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Beatae iste sequi in neque temporibus veniam!
+                    </Typography.Paragraph>
+                  }
                 />
               </Skeleton>
             </List.Item>
@@ -228,15 +256,22 @@ const RecipeList: React.FC = () => {
         // disabled={!dataToDisplay.length}
         pageSize={pageSize}
         total={
-          recipeResultsByAreas.isLoading
-            ? 0
-            : getRecipeResults(activeFilter).length
+          isLoading(activeFilter) ? 0 : getRecipeResults(activeFilter).length
         }
         showTotal={(total, range) =>
           `Showing ${range[0]} to ${range[1]} of ${total}`
         }
         showSizeChanger
         showQuickJumper
+      />
+      <RecipeDetails
+        isOpen={isRecipeDetailsOpen}
+        setIsOpen={setIsRecipeDetailsOpen}
+        recipe={
+          selectedRecipeDetails.isLoading
+            ? {}
+            : selectedRecipeDetails.data?.data?.meals[0]
+        }
       />
     </section>
   );
