@@ -1,6 +1,6 @@
 import "./_recipe-details.scss";
 import React from "react";
-import { Card, Modal } from "antd";
+import { Modal } from "antd";
 import { Recipe } from "../../../../interface/Recipes";
 import MealDetail from "./Details";
 const RecipeDetails: React.FC<{
