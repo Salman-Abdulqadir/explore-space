@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiMapPin, FiHome } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router";
 
 import {
   GiForkKnifeSpoon,
@@ -29,19 +30,19 @@ const exploreSubMenuConfig: MenuProps["items"] = [
 const navConfig: MenuProps["items"] = [
   {
     label: "Home",
-    key: "home",
+    key: "/",
     icon: <FiHome />,
   },
   {
     label: "Explore",
-    key: "explore",
+    key: "/explore",
     icon: <FiMapPin />,
     children: exploreSubMenuConfig,
     disabled: false,
   },
   {
     label: "Recommendations",
-    key: "recommendations",
+    key: "/recommendations",
     icon: <FiMapPin />,
   },
   {
@@ -60,10 +61,17 @@ const navConfig: MenuProps["items"] = [
 ];
 
 const NavBar: React.FC = () => {
-  const [current, setCurrent] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [current, setCurrent] = useState(location.pathname.slice(1));
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
+    if (e.key === "home") {
+      navigate("/");
+      return;
+    }
+    if (e.keyPath.includes("/explore")) navigate("/recipe");
   };
 
   return (
