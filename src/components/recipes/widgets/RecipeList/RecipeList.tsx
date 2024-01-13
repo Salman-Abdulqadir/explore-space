@@ -1,14 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Avatar,
-  List,
-  Skeleton,
-  Pagination,
-  Typography,
-  Select,
-  Input,
-  Button,
-} from "antd";
+import { List, Pagination, Typography, Select, Input, Card } from "antd";
 import "./_recipe-list.scss";
 import useApi from "../../../../hooks/useApi";
 import { RecipeService } from "../../../../services/recipe.service";
@@ -17,7 +8,7 @@ import {
   formatFilterValues,
 } from "../../utils/helpers";
 import { defaultSelectValue } from "../../utils/constants";
-import { MdRemoveRedEye } from "react-icons/md";
+
 import RecipeDetails from "../RecipeDetails";
 
 const RecipeList: React.FC = () => {
@@ -210,43 +201,29 @@ const RecipeList: React.FC = () => {
       <div className="recipe-list">
         <List
           loading={isLoading(activeFilter)}
+          grid={{ gutter: 16, column: 5 }}
           itemLayout="horizontal"
           size="large"
           pagination={false}
           dataSource={recipesToDisplay}
           renderItem={(item: any) => (
-            <List.Item
-              key={item.idMeal}
-              actions={[
-                <Button
-                  onClick={() => {
-                    getSelectedRecipeDetails(item.idMeal);
-                  }}
-                  //   loading={selectedRecipeDetails.isLoading}
-                  icon={<MdRemoveRedEye />}
-                >
-                  View
-                </Button>,
-              ]}
-            >
-              <Skeleton loading={isLoading(activeFilter)} active avatar>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src={item.strMealThumb} shape="square" size={100} />
-                  }
-                  title={
-                    <Typography.Link href={item.href}>
-                      {item.strMeal}
-                    </Typography.Link>
-                  }
-                  description={
-                    <Typography.Paragraph>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Beatae iste sequi in neque temporibus veniam!
-                    </Typography.Paragraph>
-                  }
-                />
-              </Skeleton>
+            <List.Item>
+              <Card
+                hoverable
+                onClick={() => {
+                  getSelectedRecipeDetails(item.idMeal);
+                }}
+                style={{ width: 240, borderRadius: 16 }}
+                cover={
+                  <img
+                    alt={item.strMeal}
+                    src={item.strMealThumb}
+                    style={{ borderRadius: 16 }}
+                  />
+                }
+              >
+                <Card.Meta title={item.strMeal} />
+              </Card>
             </List.Item>
           )}
         />

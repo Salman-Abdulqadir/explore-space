@@ -1,0 +1,23 @@
+.meal-details{
+    height: 60vh;
+    width: 100%;
+    margin: 2rem 0;
+    overflow-y: auto;
+    text-align: justify;
+    .meal-details-image{
+        width: 300px;
+        border-radius: 1rem;
+    }
+    .meal-details-youtube{
+        width: 100%;
+        // display: block !important;
+        // margin: auto !important;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+    }
+    .meal-details-ingredient-card{
+        text-align: center;
+        cursor: pointer;
+        width: 20%;
+    }
+}
