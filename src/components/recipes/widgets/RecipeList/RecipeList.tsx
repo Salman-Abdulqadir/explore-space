@@ -228,19 +228,25 @@ const RecipeList: React.FC = () => {
           )}
         />
       </div>
-      <Pagination
-        onChange={(page, pageSize) => handlePagination(page, pageSize)}
-        // disabled={!dataToDisplay.length}
-        pageSize={pageSize}
-        total={
-          isLoading(activeFilter) ? 0 : getRecipeResults(activeFilter).length
-        }
-        showTotal={(total, range) =>
-          `Showing ${range[0]} to ${range[1]} of ${total}`
-        }
-        showSizeChanger
-        showQuickJumper
-      />
+      <div className="recipe-list-section-pagination">
+        <Pagination
+          onChange={(page, pageSize) => handlePagination(page, pageSize)}
+          // disabled={!dataToDisplay.length}
+          pageSize={pageSize}
+          size="small"
+          pageSizeOptions={[10, 20, 30]}
+          total={
+            isLoading(activeFilter) ? 0 : getRecipeResults(activeFilter).length
+          }
+          showTotal={(total, range) => (
+            <Typography.Title level={5}>
+              {`Showing ${range[0]} to ${range[1]} of ${total}`}
+            </Typography.Title>
+          )}
+          showSizeChanger
+          showQuickJumper
+        />
+      </div>
       <RecipeDetails
         isOpen={isRecipeDetailsOpen}
         setIsOpen={setIsRecipeDetailsOpen}

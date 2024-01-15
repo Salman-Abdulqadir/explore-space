@@ -31,6 +31,5 @@ export const extractYoutubeVideoId = (videoUrl: string) =>
 
 export const getIngredientImageUrl = (ingredient: string) => {
   const extractedIngredient = ingredient.split("-")[0].trim().replace(" ", "");
-  console.log(RecipeService.imageBaseUrl + extractedIngredient + ".png");
   return RecipeService.imageBaseUrl + extractedIngredient + ".png";
 };
