@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { List, Pagination, Typography, Select, Input, Card } from "antd";
+import {
+  List,
+  Pagination,
+  Typography,
+  Select,
+  Input,
+  Card,
+  Button,
+} from "antd";
 import "./_recipe-list.scss";
 import useApi from "../../../../hooks/useApi";
 import { RecipeService } from "../../../../services/recipe.service";
@@ -9,7 +17,12 @@ import {
 } from "../../utils/helpers";
 import { defaultSelectValue } from "../../utils/constants";
 
+// icons
+import { FiFilter } from "react-icons/fi";
+
+// components
 import RecipeDetails from "../RecipeDetails";
+import RecipeFilters from "./RecipeFilters";
 
 const RecipeList: React.FC = () => {
   //api calls
@@ -47,6 +60,7 @@ const RecipeList: React.FC = () => {
     ingredientFilter: defaultSelectValue("Ingredient"),
   });
   const [isRecipeDetailsOpen, setIsRecipeDetailsOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   // refs
   const isRendered = useRef(false);
 
@@ -63,6 +77,7 @@ const RecipeList: React.FC = () => {
   };
 
   const handleInputChange = (type: string, value: any) => {
+    setIsFilterOpen(false);
     const _tempFormValues = { ...formValues };
     if (type === "areaFilter") {
       _tempFormValues.categoryFilter = defaultSelectValue("Category");
@@ -146,56 +161,9 @@ const RecipeList: React.FC = () => {
             onSearch={() => console.log("hello")}
             enterButton
           />
-          <Select
-            showSearch={true}
-            disabled={areaSelectValues.isLoading}
-            onChange={(_, label) => handleInputChange("areaFilter", label)}
-            value={formValues.areaFilter}
-            options={
-              areaSelectValues.isLoading
-                ? []
-                : convertArrayToSelectValues(
-                    formatFilterValues(
-                      areaSelectValues.data.data.meals,
-                      "strArea"
-                    )
-                  )
-            }
-          />
-          <Select
-            showSearch={true}
-            disabled={categorySelectValues.isLoading}
-            onChange={(_, label) => handleInputChange("categoryFilter", label)}
-            value={formValues.categoryFilter}
-            options={
-              categorySelectValues.isLoading
-                ? []
-                : convertArrayToSelectValues(
-                    formatFilterValues(
-                      categorySelectValues.data.data.meals,
-                      "strCategory"
-                    )
-                  )
-            }
-          />
-          <Select
-            showSearch={true}
-            disabled={ingredientSelectValues.isLoading}
-            onChange={(_, label) =>
-              handleInputChange("ingredientFilter", label)
-            }
-            value={formValues.ingredientFilter}
-            options={
-              ingredientSelectValues.isLoading
-                ? []
-                : convertArrayToSelectValues(
-                    formatFilterValues(
-                      ingredientSelectValues.data.data.meals,
-                      "strIngredient"
-                    )
-                  )
-            }
-          />
+          <Button icon={<FiFilter />} onClick={() => setIsFilterOpen(true)}>
+            Filters
+          </Button>
         </div>
       </div>
       <div className="recipe-list">
@@ -256,6 +224,59 @@ const RecipeList: React.FC = () => {
             : selectedRecipeDetails.data?.data?.meals[0]
         }
       />
+      <RecipeFilters isOpen={isFilterOpen} setIsOpen={setIsFilterOpen}>
+        <Select
+          showSearch={true}
+          style={{ width: 200 }}
+          disabled={areaSelectValues.isLoading}
+          onChange={(_, label) => handleInputChange("areaFilter", label)}
+          value={formValues.areaFilter}
+          options={
+            areaSelectValues.isLoading
+              ? []
+              : convertArrayToSelectValues(
+                  formatFilterValues(
+                    areaSelectValues.data.data.meals,
+                    "strArea"
+                  )
+                )
+          }
+        />
+        <Select
+          showSearch={true}
+          style={{ width: 200 }}
+          disabled={categorySelectValues.isLoading}
+          onChange={(_, label) => handleInputChange("categoryFilter", label)}
+          value={formValues.categoryFilter}
+          options={
+            categorySelectValues.isLoading
+              ? []
+              : convertArrayToSelectValues(
+                  formatFilterValues(
+                    categorySelectValues.data.data.meals,
+                    "strCategory"
+                  )
+                )
+          }
+        />
+        <Select
+          showSearch={true}
+          style={{ width: 200 }}
+          disabled={ingredientSelectValues.isLoading}
+          onChange={(_, label) => handleInputChange("ingredientFilter", label)}
+          value={formValues.ingredientFilter}
+          options={
+            ingredientSelectValues.isLoading
+              ? []
+              : convertArrayToSelectValues(
+                  formatFilterValues(
+                    ingredientSelectValues.data.data.meals,
+                    "strIngredient"
+                  )
+                )
+          }
+        />
+      </RecipeFilters>
     </section>
   );
 };
