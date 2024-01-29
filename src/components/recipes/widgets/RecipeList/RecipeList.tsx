@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import {
   List,
   Pagination,
@@ -25,6 +26,7 @@ import RecipeDetails from "../RecipeDetails";
 import RecipeFilters from "./RecipeFilters";
 
 const RecipeList: React.FC = () => {
+  const navigate = useNavigate();
   //api calls
   const [recipeResultsByAreas, getRecipesByAreas] = useApi(
     RecipeService.getMealsByArea
@@ -126,7 +128,7 @@ const RecipeList: React.FC = () => {
   // useEffects
   useEffect(() => {
     if (!isRendered.current) {
-      getRecipesByAreas("American");
+      getRecipesByAreas("Chinese");
       getAreaSelectValues();
       getIngredientSelectValues();
       getCategorySelectValues();
@@ -169,7 +171,7 @@ const RecipeList: React.FC = () => {
       <div className="recipe-list">
         <List
           loading={isLoading(activeFilter)}
-          grid={{ gutter: 16, column: 5 }}
+          grid={{ gutter: 16, column: 6 }}
           itemLayout="horizontal"
           size="large"
           pagination={false}
@@ -179,9 +181,10 @@ const RecipeList: React.FC = () => {
               <Card
                 hoverable
                 onClick={() => {
-                  getSelectedRecipeDetails(item.idMeal);
+                  navigate(`/recipe/${item.idMeal}`);
+                  //   getSelectedRecipeDetails(item.idMeal);
                 }}
-                style={{ width: 240, borderRadius: 16 }}
+                style={{ width: 180, borderRadius: 16 }}
                 cover={
                   <img
                     alt={item.strMeal}
