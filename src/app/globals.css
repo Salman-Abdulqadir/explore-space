@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-blue-900: #0b0d17;
+  --color-blue-300: #d0d6f9;
+  --color-grey: #979797;
+  --color-drawer-bg: #0b0d17;
+
+  /* Spacing */
+  --spacing-space-25: 2px;
+  --spacing-space-50: 4px;
+  --spacing-space-100: 8px;
+  --spacing-space-150: 12px;
+  --spacing-space-200: 16px;
+  --spacing-space-300: 24px;
+  --spacing-space-400: 32px;
+  --spacing-space-500: 40px;
+  --spacing-space-600: 48px;
+  --spacing-space-800: 64px;
+  --spacing-space-1000: 80px;
+  --spacing-space-1200: 96px;
+  --spacing-space-1600: 128px;
+}
+
+@layer utilities {
+  /* Text Preset 1 */
+  .text-level-1 {
+    font-family: "Bellefair", sans-serif;
+    font-size: 144px;
+    line-height: 171.9%;
+    letter-spacing: 0px;
+  }
+
+  /* Text Preset 2 */
+  .text-level-2 {
+    font-family: "Bellefair", sans-serif;
+    font-size: 100px;
+    line-height: 114.6%;
+    letter-spacing: 0px;
+  }
+
+  /* Text Preset 3 */
+  .text-level-3 {
+    font-family: "Bellefair", sans-serif;
+    font-size: 50px;
+    line-height: 100%;
+  }
+
+  /* Text Preset 4 */
+  .text-level-4 {
+    font-family: "Bellefair", sans-serif;
+    font-size: 32px;
+  }
+
+  /* Text Preset 5 */
+  .text-level-5 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 28px;
+    line-height: 33.6%;
+    letter-spacing: 4px;
+  }
+
+  /* Text Preset 6 */
+  .text-level-6 {
+    font-family: "Bellefair", sans-serif;
+    font-size: 28px;
+    line-height: 32.1%;
+  }
+
+  /* Text Preset 7 */
+  .text-level-7 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 14px;
+  }
+
+  /* Text Preset 8 */
+  .text-level-8 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 16px;
+    /* line-height: 19.2%;
+    letter-spacing: 2px; */
+  }
+
+  /* Text Preset 9 */
+  .text-level-9 {
+    font-family: "Barlow", sans-serif;
+    font-size: 18px;
+    line-height: 180%;
+    letter-spacing: 0px;
+  }
+}
